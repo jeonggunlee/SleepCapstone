@@ -1,4 +1,4 @@
 # 관련 자료 디렉트로 (논문 등)
 
 
--  [안전도, 뇌파도, 근전도 분석을 통한 수면 단계 분류](paper_summary.md) [pdf](./papers/paper1.pdf)
+-  [안전도, 뇌파도, 근전도 분석을 통한 수면 단계 분류](paper_summary.md)  [[pdf](./papers/paper1.pdf)]
