@@ -23,8 +23,8 @@
    
    - 9월 18일: 논문 발표
       - XXX : [논문 제목](./papers/XXX.ppt)
-      - 이길재 : [머신러닝 기반의 수면 패턴 분석] ./papers/머신러닝 기반의 수면 패턴 분석.pptx
-      (./papers/leegiljae.ppt)
+      - 이길재 : [머신러닝 기반의 수면 패턴 분석](./papers/leegiljae.pptx)
+     
       
 
 
