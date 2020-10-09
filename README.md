@@ -25,7 +25,7 @@
 
    - 9월 25일: 1차 데이터 준비 : Colab에서 Jupyter Note 구성
    
-   - 10월 8일: 2차 데이터 준비/완료: Colab에서 공공데이터 준비 및 Simple Classification
+   - 10월 8일: 2차 데이터 준비/완료: Colab에서 공공데이터 준비 및 Simple Classification [Codes](https://github.com/jeonggunlee/SleepCapstone/tree/master/Codes)
    
       
 
