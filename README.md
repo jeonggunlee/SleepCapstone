@@ -27,5 +27,7 @@
    - 10월 8일: 2차 데이터 준비/완료: Colab에서 공공데이터 준비 및 Simple Classification [Codes](https://github.com/jeonggunlee/SleepCapstone/tree/master/Codes)
    
       
+### 좋은 자료
+   - [자료 1: Spindle 검출 알고리즘 등등](https://raphaelvallat.com/)
 
 
