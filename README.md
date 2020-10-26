@@ -27,6 +27,10 @@
    
    - 10월 8일: 2차 데이터 준비/완료: Colab에서 공공데이터 준비 및 Simple Classification [Codes](https://github.com/jeonggunlee/SleepCapstone/tree/master/Codes)
    
+   - 10월 15일: 모델에 대한 토의 및 실험 결과 공유
+   
+   - 10월 22일: Big Data Capstone 중간 발표회 포스터 제작 및 토의
+      - ![중간발표 포스터](./reports/capston_poster.png)
       
 ### 좋은 자료
    - [자료 1: Spindle 검출 알고리즘 등등](https://raphaelvallat.com/)
