@@ -9,6 +9,32 @@ codes!
    - best epoch : 22/2000 / accuracy : 56.344460%
    
 - simpleFC_with_Relu2.ipynb : Dropout 추가. 그러나, 성능향상은 없어보임
+```python
+  def forward(self, input):
+        out = torch.flatten(input, 1)
+        out = self.fc1(out)
+        out = self.ReLU(out)
+        out = self.dropout(out)
+        out = self.fc2(out)
+        out = self.ReLU(out)
+        out = self.dropout(out)        
+        out = self.fc3(out)
+        out = self.ReLU(out)
+        out = self.dropout(out)
+        out = self.fc4(out)
+        out = self.ReLU(out)
+        out = self.dropout(out)        
+        out = self.fc5(out)
+        out = self.ReLU(out)
+        out = self.dropout(out)        
+        out = self.fc6(out)        
+```
+```
+train dataset : 61/2000 epochs spend time : 1.7839 sec / total_loss : 0.1828 correct : 28279/29223 -> 96.7697%
+test dataset : 61/2000 epochs spend time : 0.4829 sec  / total_loss : 2.7043 correct : 4993/9197 -> 54.2894%
+Early Stopping
+best epoch : 30/2000 / accuracy : 55.811678%
+```
 
 - SleepNet_with_Convolution.ipynb : Convolution Layer 추가
 
