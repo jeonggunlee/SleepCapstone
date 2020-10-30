@@ -12,13 +12,6 @@ codes!
 
 - SleepNet_with_Convolution.ipynb : Convolution Layer 추가
 
->>        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=200, stride=50)
->>        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=20, stride=5)
->>        self.fc1 = nn.Linear(256,160)
->>        self.fc2 = nn.Linear(160,out_channel) 
->>
->>        self.ReLU = nn.ReLU()
->>        self.dropout = nn.Dropout(p=0.3)
 >>
 >>    def forward(self, input):
 >>        out = self.conv1d_1(input)
