@@ -12,7 +12,7 @@ codes!
 
 - SleepNet_with_Convolution.ipynb : Convolution Layer 추가
 
->>
+```python
 >>    def forward(self, input):
 >>        out = self.conv1d_1(input)
 >>        out = self.ReLU(out)
@@ -23,6 +23,6 @@ codes!
 >>        out = self.ReLU(out)
 >>        out = self.fc2(out)
 >>        out = self.ReLU(out)   
->>
+```
 
 
