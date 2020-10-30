@@ -24,5 +24,11 @@ codes!
 >>        out = self.fc2(out)
 >>        out = self.ReLU(out)   
 ```
+```
+train dataset : 53/2000 epochs spend time : 1.4573 sec / total_loss : 1.0304 correct : 18657/30515 -> 61.1404%
+test dataset : 53/2000 epochs spend time : 0.2809 sec  / total_loss : 1.1494 correct : 4435/7905 -> 56.1037%
+Early Stopping
+best epoch : 22/2000 / accuracy : 61.454775%
+```
 
 
