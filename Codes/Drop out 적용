@@ -1,0 +1,73 @@
+Drop out을 적용하여 실행시켜 봤습니다.. 
+class DeepSleepNet_Classification(nn.Module):  # input channel = 8channel / output = 5
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,128,128],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+
+        
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        self.pool = nn.MaxPool2d(kernel_size = 2, stride = 2)
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel) 
+
+        self.ReLU = nn.ReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)   ## self.pool(F.ReLU(self.conv1d_1(input)))
+        out = self.ReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)    ##self.pool(F.ReLU(self.conv1d_2(out)))
+        out = self.ReLU(out)
+        out = self.dropout(out)
+        out = torch.flatten(out, 1)
+        out = self.fc1(out)
+        out = self.ReLU(out)
+        out = self.dropout(out)
+        out = self.fc2(out)
+        out = self.ReLU(out)
+        out = self.dropout(out)
+
+        return out
+        
+        train dataset : 126/2000 epochs spend time : 1.4129 sec / total_loss : 1.3498 correct : 14007/29960 -> 46.7523%
+test dataset : 126/2000 epochs spend time : 0.2832 sec  / total_loss : 1.3182 correct : 3514/7556 -> 46.5061%
+Early Stopping
+best epoch : 95/2000 / accuracy : 46.638433%
+
+
+
+두번째로는 Drop out 적용은 하지 않고 실행 결과
+
+self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        self.pool = nn.MaxPool2d(kernel_size = 2, stride = 2)
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel) 
+
+        self.ReLU = nn.ReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)   ## self.pool(F.ReLU(self.conv1d_1(input)))
+        out = self.ReLU(out)
+        out = self.conv1d_2(out)    ##self.pool(F.ReLU(self.conv1d_2))
+        out = self.ReLU(out)
+        out = torch.flatten(out, 1)
+        out = self.fc1(out)
+        out = self.ReLU(out)
+        out = self.fc2(out)
+        out = self.ReLU(out)
+
+
+       train dataset : 132/2000 epochs spend time : 1.3828 sec / total_loss : 0.7619 correct : 21280/29960 -> 71.0280%
+test dataset : 132/2000 epochs spend time : 0.2766 sec  / total_loss : 1.3182 correct : 5641/7556 -> 74.6559%
+Early Stopping
+best epoch : 101/2000 / accuracy : 75.039704%
+
+
+
+
+
+
+
