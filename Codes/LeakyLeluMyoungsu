@@ -1,0 +1,39 @@
+LeakyLelu함수와 Drop out
+
+
+class DeepSleepNet_Classification(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+
+
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        self.pool = nn.MaxPool2d(2,2)
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel)
+         
+
+        self.LeakyReLU = nn.LeakyReLU()
+        self.dropout = nn.Dropout(p=0.2)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = torch.flatten(out, 1)
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+
+        return out
+
+current_lr : 0.000016
+train dataset : 103/2000 epochs spend time : 0.6862 sec / total_loss : 0.8364 correct : 20898/30400 -> 68.7434%
+test dataset : 103/2000 epochs spend time : 0.1305 sec  / total_loss : 0.9859 correct : 5438/8020 -> 67.8055%
+Early Stopping
+best epoch : 72/2000 / accuracy : 68.541147%
+==============================
