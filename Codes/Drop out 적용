@@ -70,6 +70,43 @@ test dataset : 115/2000 epochs spend time : 0.2834 sec  / total_loss : 0.6789 co
 Early Stopping
 best epoch : 84/2000 / accuracy : 75.727898%
 
+drop out을 일부분 적용해봤습니다
+
+
+class DeepSleepNet_Classification(nn.Module):  # input channel = 8channel / output = 5
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,128,128],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+
+        
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        self.pool = nn.MaxPool2d(2,2)
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel) 
+
+        self.ReLU = nn.ReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.ReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.ReLU(out)
+        out = self.dropout(out)
+        out = torch.flatten(out, 1)
+        out = self.fc1(out)
+        out = self.ReLU(out)
+        out = self.fc2(out)
+        out = self.ReLU(out)
+
+        return out
+        
+그 결과
+train dataset : 94/2000 epochs spend time : 1.4470 sec / total_loss : 0.9086 correct : 19702/29960 -> 65.7610%
+test dataset : 94/2000 epochs spend time : 0.2761 sec  / total_loss : 0.8011 correct : 5500/7556 -> 72.7898%
+Early Stopping
+best epoch : 63/2000 / accuracy : 73.557438%
 
 
 
