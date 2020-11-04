@@ -1,0 +1,66 @@
+가장 정확도가 높았을 때 도 올려봅니다!
+
+드랍아웃 LeakyRelu 함수
+
+current_lr : 0.000500
+train dataset : 213/2000 epochs spend time : 0.6356 sec / total_loss : 0.6760 correct : 22017/29387 -> 74.9209%
+test dataset : 213/2000 epochs spend time : 0.1370 sec  / total_loss : 0.6470 correct : 6918/9033 -> 76.5859%
+Early Stopping
+best epoch : 182/2000 / accuracy : 77.371859%
+
+class DeepSleepNet_Classification(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,128,128],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+
+
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        self.pool = nn.MaxPool2d(2,2)
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel)
+
+ self.LeakyReLU = nn.LeakyReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+
+ out = torch.flatten(out, 1)
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+       
+
+        return out
+
+
+-----------------------------------------------------------------------------------
+드랍아웃 미적용 LeakyRelu함수
+current_lr : 0.000004
+train dataset : 255/2000 epochs spend time : 0.6342 sec / total_loss : 0.6462 correct : 22470/29387 -> 76.4624%
+test dataset : 255/2000 epochs spend time : 0.1406 sec  / total_loss : 0.7451 correct : 6399/9033 -> 70.8403%
+Early Stopping
+best epoch : 224/2000 / accuracy : 70.840252%
+
+def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+      
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+       
+        out = torch.flatten(out, 1)
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+      
+
+        return out
+
