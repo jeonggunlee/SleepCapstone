@@ -1,0 +1,146 @@
+Relu : x > 0 : x 
+       x < 0 : 0
+정확도 : 67%
+
+class DeepSleepNet_Classification(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+
+
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel)
+         
+        self.ReLU = nn.ReLU()
+        
+        self.dropout = nn.Dropout(p=0.3)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.ReLU(out)
+
+        out = self.dropout(out)
+
+        out = self.conv1d_2(out)
+        out = self.ReLU(out)
+
+        out = self.dropout(out)
+
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.ReLU(out)
+
+        out = self.fc2(out)
+        out = self.ReLU(out)
+
+        return out
+
+
+current_lr : 0.000016
+train dataset : 150/2000 epochs spend time : 0.8665 sec / total_loss : 0.8119 correct : 20403/29103 -> 70.1062%
+test dataset : 150/2000 epochs spend time : 0.1543 sec  / total_loss : 0.8605 correct : 6127/9317 -> 65.7615%
+Early Stopping
+best epoch : 119/2000 / accuracy : 66.287432%
+
+
+===============================================================================================
+
+LeakyReLU  : x<0 에서 0이 아닌 작은 값의 기울기를 부여        
+             정확도 : 77%
+
+class DeepSleepNet_Classification(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+
+
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel)
+         
+        self.LeakyReLU = nn.LeakyReLU()
+        
+        self.dropout = nn.Dropout(p=0.3)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+
+        out = self.dropout(out)
+
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+
+        out = self.dropout(out)
+
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+
+        return out
+        
+  current_lr : 0.000002
+  train dataset : 296/2000 epochs spend time : 0.8612 sec / total_loss : 0.6427 correct : 22254/29103 -> 76.4663%
+  test dataset : 296/2000 epochs spend time : 0.1474 sec  / total_loss : 0.6129 correct : 7178/9317 -> 77.0420%
+  Early Stopping
+  best epoch : 265/2000 / accuracy : 77.771815%
+ 
+  ====================================================================================
+  
+  ELU : ReLU 의 장점과 drying ReLU의 문제 해결
+  정확도 : 65%
+  
+  class DeepSleepNet_Classification(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+
+
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel)
+         
+        self.ReLU = nn.ReLU()
+        self.ELU = nn.ELU()
+
+        self.dropout = nn.Dropout(p=0.3)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.ELU(out)
+
+        out = self.dropout(out)
+
+        out = self.conv1d_2(out)
+        out = self.ELU(out)
+
+        out = self.dropout(out)
+
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.ELU(out)
+
+        out = self.fc2(out)
+        out = self.ELU(out)
+
+        return out
+        
+        
+current_lr : 0.000125
+train dataset : 145/2000 epochs spend time : 0.8850 sec / total_loss : 0.8188 correct : 20160/29103 -> 69.2712%
+test dataset : 145/2000 epochs spend time : 0.1624 sec  / total_loss : 0.8646 correct : 5990/9317 -> 64.2911%
+Early Stopping
+best epoch : 114/2000 / accuracy : 65.257057%
+
+=============================================================
+
+결론 : 
+ReLU가 일반적이기는 하나 Leaky ReLU의 성능이 현재로써는 더 좋게 나왔고 앞으로 더 다양한 방법을 사용해 성능을 향상 시킬 수 있을거 같다.
+        
