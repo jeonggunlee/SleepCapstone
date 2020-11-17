@@ -1,0 +1,130 @@
+LSTM,RNN,GRU 모델 모두 사용해봤습니다
+
+
+우선 RNN모델은
+class RNNModel(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(RNNModel, self).__init__()
+
+
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel)
+        
+        
+        self.LeakyReLU = nn.LeakyReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+
+        return out
+        
+        
+        
+train dataset : 171/2000 epochs spend time : 1.3563 sec / total_loss : 0.7801 correct : 21285/29960 -> 71.0447%
+test dataset : 171/2000 epochs spend time : 0.2771 sec  / total_loss : 0.7360 correct : 5515/7556 -> 72.9884%
+Early Stopping
+best epoch : 140/2000 / accuracy : 73.861832%
+
+다음은 GRU모델입니다ㅣ
+
+
+class GRUModel(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(GRUModel, self).__init__()
+
+
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel)
+        
+        
+        self.LeakyReLU = nn.LeakyReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+
+        return out
+        
+        
+train dataset : 187/2000 epochs spend time : 1.4336 sec / total_loss : 0.7286 correct : 21963/29960 -> 73.3077%
+test dataset : 187/2000 epochs spend time : 0.2789 sec  / total_loss : 0.7088 correct : 5625/7556 -> 74.4442%
+Early Stopping
+best epoch : 156/2000 / accuracy : 75.000000%
+
+마지막으로 LSTM 모델입니다
+
+
+class LSTMModel(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(LSTMModel, self).__init__()
+
+
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel)
+        
+        
+        self.LeakyReLU = nn.LeakyReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+
+        return out
+        
+train dataset : 156/2000 epochs spend time : 1.4902 sec / total_loss : 0.8647 correct : 20089/29960 -> 67.0527%
+test dataset : 156/2000 epochs spend time : 0.2859 sec  / total_loss : 0.7713 correct : 5446/7556 -> 72.0752%
+Early Stopping
+best epoch : 125/2000 / accuracy : 72.948650%
+        
+        
+        
+
