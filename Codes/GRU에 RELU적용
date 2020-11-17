@@ -1,0 +1,42 @@
+GRU에 RELU적용
+
+
+
+class GRUMModel(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(GRUModel, self).__init__()
+
+
+        self.conv1d_1 = nn.Conv1d(1,16, kernel_size=300, stride=50)
+        self.conv1d_2 = nn.Conv1d(16, 32, kernel_size=10, stride=5)
+        
+        self.fc1 = nn.Linear(320,160)
+        self.fc2 = nn.Linear(160,out_channel)
+        
+        
+        self.ReLU = nn.LeakyReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.ReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.ReLU(out)
+        out = self.dropout(out)
+        
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.ReLU(out)
+
+        out = self.fc2(out)
+        out = self.ReLU(out)
+
+        return out
+        
+        
+current_lr : 0.000063
+train dataset : 216/2000 epochs spend time : 1.4147 sec / total_loss : 0.6808 correct : 22484/29960 -> 75.0467%
+test dataset : 216/2000 epochs spend time : 0.2851 sec  / total_loss : 0.6902 correct : 5671/7556 -> 75.0529%
+best epoch : 187/2000 / val accuracy : 76.005823%
