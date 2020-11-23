@@ -1,0 +1,78 @@
+lass DeepSleepNet_Classification(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+       
+        self.conv1d_1 = nn.Conv1d(1,32, kernel_size=100, stride=50)
+        self.conv1d_2 = nn.Conv1d(32,64, kernel_size=10, stride=5)
+        
+        self.fc1 = nn.Linear(640,320)
+        self.fc2 = nn.Linear(320,out_channel)
+        
+        self.LeakyReLU = nn.LeakyReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+
+        return out
+        
+        
+current_lr : 0.000063
+train dataset : 153/2000 epochs spend time : 1.4435 sec / total_loss : 0.6871 correct : 22450/29960 -> 74.9332%
+test dataset : 153/2000 epochs spend time : 0.3016 sec  / total_loss : 0.6759 correct : 5617/7556 -> 74.3383%
+Early Stopping
+best epoch : 122/2000 / accuracy : 75.476443%
+
+
+
+
+class DeepSleepNet_Classification(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+       
+        self.conv1d_1 = nn.Conv1d(1,64, kernel_size=100, stride=50)
+        self.conv1d_2 = nn.Conv1d(64,128, kernel_size=10, stride=5)
+        
+        self.fc1 = nn.Linear(1280,640)
+        self.fc2 = nn.Linear(640,out_channel)
+        
+        self.LeakyReLU = nn.LeakyReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+
+        return out
+        
+        
+current_lr : 0.000250
+train dataset : 106/2000 epochs spend time : 1.4690 sec / total_loss : 0.6060 correct : 23530/29960 -> 78.5381%
+test dataset : 106/2000 epochs spend time : 0.2964 sec  / total_loss : 0.6472 correct : 5696/7556 -> 75.3838%
+Early Stopping
+best epoch : 75/2000 / accuracy : 77.091053%
+
+
