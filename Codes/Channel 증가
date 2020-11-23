@@ -76,3 +76,41 @@ Early Stopping
 best epoch : 75/2000 / accuracy : 77.091053%
 
 
+class DeepSleepNet_Classification(nn.Module):  
+    def __init__(self,in_channel=1,out_channel=6,layer=[64,128,256,256],sample_rate = 100):
+        super(DeepSleepNet_Classification, self).__init__()
+       
+        self.conv1d_1 = nn.Conv1d(1,128, kernel_size=100, stride=50)
+        self.conv1d_2 = nn.Conv1d(128,256, kernel_size=10, stride=5)
+        
+        self.fc1 = nn.Linear(2560,1280)
+        self.fc2 = nn.Linear(1280,out_channel)
+        
+        self.LeakyReLU = nn.LeakyReLU()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, input):
+        out = self.conv1d_1(input)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = self.conv1d_2(out)
+        out = self.LeakyReLU(out)
+        out = self.dropout(out)
+        out = torch.flatten(out, 1)
+
+        out = self.fc1(out)
+        out = self.LeakyReLU(out)
+
+        out = self.fc2(out)
+        out = self.LeakyReLU(out)
+
+        return out
+        
+        
+ current_lr : 0.000125
+train dataset : 113/2000 epochs spend time : 2.0197 sec / total_loss : 0.4968 correct : 24748/29960 -> 82.6035%
+test dataset : 113/2000 epochs spend time : 0.3215 sec  / total_loss : 0.6531 correct : 5791/7556 -> 76.6411%
+Early Stopping
+best epoch : 82/2000 / accuracy : 77.938062%
+
+
