@@ -33,7 +33,11 @@
    
    - 10월 22일: Big Data Capstone 중간 발표회 포스터 제작 및 토의
       - ![중간발표 포스터](./reports/capston_poster.png)
-      
+
+   - 10월 29일 - 11월 19일: 모델에 대한 토의 및 실험 결과 공유
+   
+   - 11월 25일: 한림대 성심병원 수면다원평가실 방문 및 협의
+
 ### 좋은 자료
    - [자료 1: Spindle 검출 알고리즘 등등](https://raphaelvallat.com/)
 
